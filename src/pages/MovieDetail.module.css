@@ -1,0 +1,50 @@
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.backLink {
+  text-decoration: none;
+  color: #007bff;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.card {
+  display: flex;
+  gap: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 300px;
+  border-radius: 8px;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h2 {
+  margin-top: 0;
+}
+
+.overview {
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+.center {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+}

@@ -3,8 +3,8 @@ import styles from './MovieCard.module.css';
 
 interface MovieCardProps {
     id: number;
-    title: String;
-    poster_path: String | null;
+    title: string;
+    poster_path: string | null;
 }
 
 const MovieCard = ( { id, title, poster_path}: MovieCardProps ) => {
