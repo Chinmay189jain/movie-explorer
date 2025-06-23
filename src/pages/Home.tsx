@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { searchMovies } from '../api/tmdb';
 import MovieCard from '../components/MovieCard';
 import styles from './Home.module.css';
-
+import useDebounce from '../hooks/useDebounce';
 interface Movie {
   id: number;
   title: string;
@@ -14,11 +14,21 @@ const Home = () => {
     const [query, setQuery] = useState("");
     const [movies, setMovies] = useState<Movie[]>([]);
 
-    const handleSearch = async () => {
-        if(!query.trim()) return;
-        const data = await searchMovies(query);
-        setMovies(data);
-    }
+    const debouncedQuery = useDebounce(query, 500);
+
+    useEffect(() => {
+        const fetch = async () => {
+            if (!debouncedQuery.trim()) {
+                setMovies([]);
+                return;
+            }
+
+            const results = await searchMovies(debouncedQuery);
+            setMovies(results);
+        };
+
+        fetch();
+    }, [debouncedQuery]);
 
     return (
         <div className={styles.container}>
@@ -30,7 +40,6 @@ const Home = () => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
-                <button onClick={handleSearch}>Search</button>
             </div>
             <div className={styles.movieList}>
                 {movies.map((movie) => (
