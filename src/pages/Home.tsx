@@ -13,8 +13,15 @@ const Home = () => {
 
     const [query, setQuery] = useState("");
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     const debouncedQuery = useDebounce(query, 500);
+
+    useEffect(() => {
+        //Whenever debouncedQuery changes, reset the page to 1
+        setCurrentPage(1);
+    }, [debouncedQuery]);
 
     useEffect(() => {
         const fetch = async () => {
@@ -23,12 +30,13 @@ const Home = () => {
                 return;
             }
 
-            const results = await searchMovies(debouncedQuery);
-            setMovies(results);
+            const data = await searchMovies(debouncedQuery, currentPage);
+            setMovies(data.results);
+            setTotalPages(data.total_pages)
         };
 
         fetch();
-    }, [debouncedQuery]);
+    }, [debouncedQuery, currentPage]);
 
     return (
         <div className={styles.container}>
@@ -50,6 +58,17 @@ const Home = () => {
                         poster_path={movie.poster_path}
                     />
                 ))}
+                {movies.length > 0 && (
+                    <div className={styles.pagination}>
+                        <button onClick={() => setCurrentPage((p) => Math.max(p-1, 1))} disabled={currentPage===1}>
+                            ◀ Previous
+                        </button>
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <button onClick={() => setCurrentPage((p) => Math.min(p+1, totalPages))} disabled={currentPage===totalPages}>
+                            Next ▶
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     )
