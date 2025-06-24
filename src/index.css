@@ -5,9 +5,24 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Light theme (default) */
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --bg: #121212;
+  --text: #ffffff;
 }
