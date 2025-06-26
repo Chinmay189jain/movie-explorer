@@ -3,6 +3,8 @@ import { searchMovies } from '../api/tmdb';
 import MovieCard from '../components/MovieCard';
 import styles from './Home.module.css';
 import useDebounce from '../hooks/useDebounce';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 interface Movie {
   id: number;
   title: string;
@@ -17,6 +19,9 @@ const Home = () => {
     const [totalPages, setTotalPages] = useState(1);
 
     const debouncedQuery = useDebounce(query, 500);
+
+    // Get list of favorite movies from Redux store
+    const favorites = useSelector((state: RootState) => state.favorites);
 
     useEffect(() => {
         //Whenever debouncedQuery changes, reset the page to 1
@@ -56,6 +61,7 @@ const Home = () => {
                         id={movie.id}
                         title={movie.title}
                         poster_path={movie.poster_path}
+                        isFavorite={favorites.some((fav) => fav.id === movie.id)}
                     />
                 ))}
                 {movies.length > 0 && (

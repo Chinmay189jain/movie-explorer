@@ -3,22 +3,18 @@ import styles from './MovieCard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../store/favoritesSlice';
 import { RootState } from '../store/store';
+import React from 'react';
 
 interface MovieCardProps {
     id: number;
     title: string;
     poster_path: string | null;
+    isFavorite: boolean;
 }
 
-const MovieCard = ( { id, title, poster_path}: MovieCardProps ) => {
+const MovieCard = ( { id, title, poster_path, isFavorite}: MovieCardProps ) => {
 
     const dispatch = useDispatch();
-
-    // Get list of favorite movies from Redux store
-    const favorites = useSelector((state: RootState) => state.favorites);
-
-    // Check if this movie is already in favorites
-    const isFavorite = favorites.some((movie) => movie.id === id);
 
     const handleFavoriteClick = () => {
         if(isFavorite){
@@ -45,4 +41,4 @@ const MovieCard = ( { id, title, poster_path}: MovieCardProps ) => {
     )
 }
 
-export default MovieCard;
+export default React.memo(MovieCard);
