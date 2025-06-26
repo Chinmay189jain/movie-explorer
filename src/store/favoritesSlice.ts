@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { loadFavourites } from "../utils/localStorage";
 
 interface FavoriteMovie {
     id: number;
@@ -6,7 +7,8 @@ interface FavoriteMovie {
     poster_path: string | null;
 }
 
-const initialState: FavoriteMovie[] = [];
+// Load from localStorage
+const initialState: FavoriteMovie[] = loadFavourites();
 
 const favoritesSlice = createSlice({
     name: 'favorites',
