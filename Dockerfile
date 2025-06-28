@@ -1,6 +1,12 @@
 # Use official Node image to build the React app
 FROM node:18-alpine AS build
 
+# Accept build arg
+ARG REACT_APP_TMDB_API_KEY
+
+# Set ENV variable for React to use
+ENV REACT_APP_TMDB_API_KEY=$REACT_APP_TMDB_API_KEY
+
 # Set working directory
 WORKDIR /app
 

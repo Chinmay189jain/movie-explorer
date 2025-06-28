@@ -27,3 +27,5 @@ jobs:
           context: .
           push: true
           tags: chinmay189jain/movie-explorer:latest
+          build-args: |
+            REACT_APP_TMDB_API_KEY=${{ secrets.REACT_APP_TMDB_API_KEY }}
